@@ -48,7 +48,7 @@ class CopyBuild implements \PHPCI\Plugin
     */
     public function execute()
     {
-        $build = $this->phpci->buildPath;
+        $build = $this->phpci->buildPath . DIRECTORY_SEPARATOR;
 
         if ($this->directory == $build) {
             return false;
@@ -56,7 +56,7 @@ class CopyBuild implements \PHPCI\Plugin
 
         $this->wipeExistingDirectory();
 
-        $cmd = 'mkdir -p "%s" && cp -R "%s" "%s"';
+        $cmd = 'mkdir -p "%s" && cp -R \'%s\'* "%s"';
         if (IS_WIN) {
             $cmd = 'mkdir -p "%s" && xcopy /E "%s" "%s"';
         }
@@ -75,8 +75,8 @@ class CopyBuild implements \PHPCI\Plugin
     protected function wipeExistingDirectory()
     {
         if ($this->wipe === true && $this->directory != '/' && is_dir($this->directory)) {
-            $cmd = 'rm -Rf "%s*"';
-            $success = $this->phpci->executeCommand($cmd, $this->directory);
+            $cmd = 'rm -Rf "%s"*';
+            $success = $this->phpci->executeCommand($cmd, $this->directory . DIRECTORY_SEPARATOR);
 
             if (!$success) {
                 throw new \Exception(Lang::get('failed_to_wipe', $this->directory));

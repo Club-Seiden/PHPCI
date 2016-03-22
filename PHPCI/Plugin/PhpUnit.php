@@ -76,15 +76,15 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
             return 'phpunit.xml';
         }
 
-        if (file_exists($buildPath . 'tests' . DIRECTORY_SEPARATOR . 'phpunit.xml')) {
+        if (file_exists($buildPath . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'phpunit.xml')) {
             return 'tests' . DIRECTORY_SEPARATOR . 'phpunit.xml';
         }
 
-        if (file_exists($buildPath . 'phpunit.xml.dist')) {
+        if (file_exists($buildPath . DIRECTORY_SEPARATOR . 'phpunit.xml.dist')) {
             return 'phpunit.xml.dist';
         }
 
-        if (file_exists($buildPath . 'tests/phpunit.xml.dist')) {
+        if (file_exists($buildPath . DIRECTORY_SEPARATOR . 'tests/phpunit.xml.dist')) {
             return 'tests' . DIRECTORY_SEPARATOR . 'phpunit.xml.dist';
         }
 
@@ -226,7 +226,7 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
             $phpunit = $this->phpci->findBinary('phpunit');
 
             $cmd = $phpunit . ' --tap %s "%s"';
-            $success = $this->phpci->executeCommand($cmd, $this->args, $this->phpci->buildPath . $directory);
+            $success = $this->phpci->executeCommand($cmd, $this->args, $this->phpci->buildPath . DIRECTORY_SEPARATOR . $directory);
             chdir($curdir);
             return $success;
         }
