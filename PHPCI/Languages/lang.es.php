@@ -155,6 +155,7 @@ PHPCI',
     'build_x_not_found' => 'El build con ID %d no existe.',
     'build_n' => 'Build %d',
     'rebuild_now' => 'Rebuild Ahora',
+    'new_build' => 'Build Nuevo',
 
 
     'committed_by_x' => 'Commit hecho por %s',

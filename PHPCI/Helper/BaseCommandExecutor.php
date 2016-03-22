@@ -16,6 +16,7 @@ use Psr\Log\LogLevel;
 /**
  * Handles running system commands with variables.
  * @package PHPCI\Helper
+ *
  */
 abstract class BaseCommandExecutor implements CommandExecutor
 {
@@ -77,7 +78,7 @@ abstract class BaseCommandExecutor implements CommandExecutor
 
         $command = call_user_func_array('sprintf', $args);
 
-        if ($this->quiet) {
+        if ($this->verbose) {
             $this->logger->log('Executing: ' . $command);
         }
 
@@ -90,6 +91,7 @@ abstract class BaseCommandExecutor implements CommandExecutor
 
         $pipes = array();
 
+        @mkdir($this->buildPath); // Prevents CreateProcess failed, error code - 267 -- see http://stackoverflow.com/a/30296289/95195
         $process = proc_open($command, $descriptorSpec, $pipes, $this->buildPath, null);
 
         if (is_resource($process)) {

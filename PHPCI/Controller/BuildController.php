@@ -86,15 +86,18 @@ class BuildController extends \PHPCI\Controller
                 break;
         }
 
+        $buildNew = Lang::get('new_build');#, $build->getProject()->getTitle());
+        $buildNewLink = PHPCI_URL . 'project/build/' . $build->getProjectId();
+        $actions = "<a class=\"btn btn-default\" href=\"{$buildNewLink}\">{$buildNew}</a> ";
+
         $rebuild = Lang::get('rebuild_now');
         $rebuildLink = PHPCI_URL . 'build/rebuild/' . $build->getId();
 
-        $delete = Lang::get('delete_build');
-        $deleteLink = PHPCI_URL . 'build/delete/' . $build->getId();
-
-        $actions = "<a class=\"btn btn-default\" href=\"{$rebuildLink}\">{$rebuild}</a> ";
+        $actions .= "<a class=\"btn btn-default\" href=\"{$rebuildLink}\">{$rebuild}</a> ";
 
         if ($this->currentUserIsAdmin()) {
+            $delete = Lang::get('delete_build');
+            $deleteLink = PHPCI_URL . 'build/delete/' . $build->getId();
             $actions .= " <a class=\"btn btn-danger\" href=\"{$deleteLink}\">{$delete}</a>";
         }
 
